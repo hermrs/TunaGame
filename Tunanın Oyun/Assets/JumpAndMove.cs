@@ -5,8 +5,8 @@ using UnityEngine;
 public class JumpAndMove : MonoBehaviour
 {
     private Rigidbody2D rb2D;
-    private float moveSpeed;
-    private float jumpSpeed;
+    [SerializeField] public float moveSpeed;
+    [SerializeField] public float jumpSpeed;
     private bool isJumping;
     private float moveH;
     private float moveV;
@@ -33,7 +33,7 @@ public class JumpAndMove : MonoBehaviour
         }
         if (!isJumping && moveV > 0.1f )
         {
-            rb2D.AddForce(new Vector2(0f,moveV* moveSpeed),ForceMode2D.Impulse);
+            rb2D.AddForce(new Vector2(0f,moveV * moveSpeed * 2),ForceMode2D.Impulse);
         }
     }
     void OnTriggerEnter2D(Collider2D collision)
@@ -43,7 +43,7 @@ public class JumpAndMove : MonoBehaviour
             isJumping = false;
         }
     }
-    void OnTriggerEnter2D(Collider collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Platform")
         {
