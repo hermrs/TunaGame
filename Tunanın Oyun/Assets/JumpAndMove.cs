@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class JumpAndMove : MonoBehaviour
 {
+    public int Can = 100;
     private Rigidbody2D rb2D;
-    private float moveSpeed;
-    private float jumpSpeed;
+    public float moveSpeed;
+    public float jumpSpeed;
+    [SerializeField]
     private bool isJumping;
     private float moveH;
     private float moveV;
@@ -43,7 +45,7 @@ public class JumpAndMove : MonoBehaviour
             isJumping = false;
         }
     }
-    void OnTriggerEnter2D(Collider collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Platform")
         {
