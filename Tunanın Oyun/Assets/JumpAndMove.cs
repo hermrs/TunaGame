@@ -11,9 +11,11 @@ public class JumpAndMove : MonoBehaviour
     private bool isJumping;
     private float moveH;
     private float moveV;
+    [SerializeField] private float direction;
     // Start is called before the first frame update
     void Start()
     {
+       
         moveSpeed = 2f;
         jumpSpeed = 10f;
         isJumping = false;
@@ -23,32 +25,20 @@ public class JumpAndMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveH = Input.GetAxisRaw("Horizontal");
-        moveV = Input.GetAxisRaw("Vertical");
-    }
-    void FixedUpdate()
-    {
-        if(moveH > 0.1f || moveH < -0.1f) 
+        direction = Input.GetAxis("Horizontal");
+        if (direction > 0f)
         {
-            rb2D.AddForce(new Vector2(moveH * moveSpeed, 0),ForceMode2D.Impulse);
+            rb2D.velocity = new Vector2(direction * moveSpeed, rb2D.velocity.y);;
         }
-        if (!isJumping && moveV > 0.1f )
+        else if(direction < 0f)
         {
-            rb2D.AddForce(new Vector2(0f,moveV* moveSpeed * 2),ForceMode2D.Impulse);
+            rb2D.velocity=new Vector2(direction * moveSpeed, rb2D.velocity.y);;
         }
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Platform")
+        else
         {
-            isJumping = false;
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
         }
     }
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Platform")
-        {
-            isJumping = true;
-        }
-    }
+    
+    
 }
